@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 
 public class HomeActivity extends Activity {
-
+    //Chris Rich Joins The Party
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActionBar actionBar = super.getActionBar();
