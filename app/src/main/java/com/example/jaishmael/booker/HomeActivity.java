@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 
 public class HomeActivity extends Activity {
-    //Chris Rich Joins The Party FUCk
+    //Chris Rich Joins The Party FUCk MEEEEE
     //Alex Test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
