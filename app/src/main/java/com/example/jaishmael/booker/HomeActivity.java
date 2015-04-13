@@ -9,6 +9,9 @@ import android.view.MenuItem;
 
 public class HomeActivity extends Activity {
     //Final Git Test
+
+    myDBHandler mDBHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActionBar actionBar = super.getActionBar();
