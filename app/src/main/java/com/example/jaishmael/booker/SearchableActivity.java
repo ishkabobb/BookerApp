@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,16 +31,22 @@ public class SearchableActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
-
+        Log.d("app:", "Started");
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("app:", "String:" + query);
+            String[] split = query.split("\\s+");
+            Log.d("app:", "String:" + split[0]);
+            Log.d("app:", "String:" + split[1]);
             //GoodReads API Key: kO8qbnq9i1TznNmTy7kSRA
             //GoodReads Secret API Key: BKnbOex3bXD1WcVT25PeCJvErjSkrP3YWA9AAsnVbnI
             //must display goodreads logo
-            //doMySearch(query);
+            getRequest(query);
         }
+        else
+            Log.d("app:", "ERROR INTENT FAILED");
 
     }
 
@@ -60,14 +67,20 @@ public class SearchableActivity extends Activity {
         return true;
     }
 
-    public static String getRequest(){ //place holder
-        StringBuffer stringBuffer = new StringBuffer("");
+    public static String getRequest(String query){ //place holder
+        Log.d("app:", "String:" + query);
+        String[] split = query.split("\\s+");
+        Log.d("app:", "String:" + split[0]);
+        Log.d("app:", "String:" + split[1]);
+
+
+        /*StringBuffer stringBuffer = new StringBuffer("");
         BufferedReader bufferedReader = null;
         try {
             HttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet();
 
-            URI uri = new URI("http://sample.campfirenow.com/rooms.xml");
+            URI uri = new URI("https://www.goodreads.com/search.xml?key=kO8qbnq9i1TznNmTy7kSRA&q=+Hugh%27s+howey");
             httpGet.setURI(uri);
             httpGet.addHeader(BasicScheme.authenticate(
                     new UsernamePasswordCredentials("user", "password"),
@@ -95,7 +108,8 @@ public class SearchableActivity extends Activity {
                 }
             }
         }
-        return stringBuffer.toString();
+        return stringBuffer.toString();*/
+        return query;
     }
 
 

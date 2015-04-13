@@ -2,24 +2,35 @@ package com.example.jaishmael.booker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 
 public class HomeActivity extends Activity {
     //Final Git Test
 
     myDBHandler mDBHandler;
+    private static SearchView mSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
+        mSearch = (SearchView)findViewById(R.id.searchView);
+        Log.d("app:", "*******Home Activity Started");
         ActionBar actionBar = super.getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setIcon(R.drawable.logo);
         actionBar.setDisplayShowHomeEnabled(true);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+
+
 
     }
 
