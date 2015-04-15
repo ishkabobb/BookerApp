@@ -27,13 +27,11 @@
         android:layout_alignParentStart="true"
         android:background="@color/primary_light"/>
 
-    <GridView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/gridView"
-        android:layout_below="@+id/imageView"
+        android:id="@+id/listView"
         android:layout_centerHorizontal="true"
-        android:background="@color/primary"
-        android:choiceMode="singleChoice"/>
+        android:layout_below="@+id/imageView"/>
 
 </RelativeLayout>
