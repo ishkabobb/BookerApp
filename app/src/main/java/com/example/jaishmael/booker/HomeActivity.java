@@ -29,6 +29,19 @@ public class HomeActivity extends Activity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setIcon(R.drawable.logo);
         actionBar.setDisplayShowHomeEnabled(true);
+        mSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(HomeActivity.this, SearchableActivity.class);
+                intent.putExtra("query", query);
+                HomeActivity.this.startActivity(intent);
+                return true;
+            }
+
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+
+        });
 
 
 
