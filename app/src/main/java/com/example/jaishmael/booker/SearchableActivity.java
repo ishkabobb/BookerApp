@@ -11,6 +11,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 
 import org.apache.http.HttpEntity;
@@ -20,53 +26,30 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-
-
-
-import java.net.URL;
-import java.net.URLConnection;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-
-import java.io.BufferedReader;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import java.util.ArrayList;
 
 
 public class SearchableActivity extends Activity {
     public static String returnedresult;
+    ListView mListView;
+    ArrayList<String> al;
+    myDBHandler mDBHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
         Log.d("app:", "Started");
-
+        mListView = (ListView)findViewById(R.id.searchlistView);
+        mDBHandler = new myDBHandler(this, null, null, 1);
         returnedresult = "";
         Intent intent = getIntent();
         String query = intent.getStringExtra(SearchManager.QUERY);
@@ -75,8 +58,31 @@ public class SearchableActivity extends Activity {
             //GoodReads Secret API Key: BKnbOex3bXD1WcVT25PeCJvErjSkrP3YWA9AAsnVbnI
             //must display goodreads logo
         getRequest(query);
-        Log.d("************APP", "ResultString:" + returnedresult);
+        //Log.d("************APP", "ResultString:" + returnedresult);
 
+
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String temp = (String) mListView.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), "Added Author: " + temp, Toast.LENGTH_SHORT).show();
+                Author a = new Author(temp);
+                if(!mDBHandler.addAuthor(a)){
+                    Toast.makeText(getApplicationContext(), "Item already exists", Toast.LENGTH_SHORT).show();
+                };
+
+            }
+        });
+
+    }
+
+    public void updatelist(ArrayList al){
+        for(int i =0; i<al.size();i++)
+            Log.d("***ITEM==","" + al.get(i));
+        Log.d("****APPALGHT: ", ""+ al.size());
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al);
+        mListView.setAdapter(mAdapter);
     }
 
 
@@ -98,7 +104,34 @@ public class SearchableActivity extends Activity {
         catch (Exception e){
 
         }
-        Log.d("**************APP", "Data " + data);
+        myAuthorsSearch(data);
+
+    }
+
+    public void myAuthorsSearch(String data) {
+        al = new ArrayList<String>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            JSONArray jb = jsonObject.getJSONArray("docs");
+
+            for (int i = 0; i < jb.length(); i++){
+                JSONObject jarr = jb.getJSONObject(i);
+                String author = jarr.getString("author_name");
+                author = author.substring(2,author.length()-2);
+                if(!al.contains(author)) {
+                    al.add(author);
+                    Log.d("***APPANAME:", "" + author);
+                }
+
+            }
+
+            updatelist(al);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -126,7 +159,8 @@ public class SearchableActivity extends Activity {
 
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
-            String request = "http://openlibrary.org/search.json?author=" + query[0];
+            String search = query[0].replaceAll("\\s+", "%20");
+            String request = "http://openlibrary.org/search.json?author=" + search;
             request = request + "&jscmd=data&format=json";
 
             HttpGet httpGet = new HttpGet(request);
@@ -156,7 +190,7 @@ public class SearchableActivity extends Activity {
         }
 
         protected void onPostExecute(String result){
-           
+
 
         }
         @Override

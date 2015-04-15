@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 /**
  * Created by Evea on 4/13/2015.
  */
@@ -36,18 +38,33 @@ public class myDBHandler extends SQLiteOpenHelper {
     }
 
     //Add new row to table
-    public void addProduct(Author a){
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_AUTHORNAME, a.getmName());
-
+    public boolean addAuthor(Author a){
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_AUTHORS, null, values);
 
-        db.close();
+        String authorName = a.getmName();
+
+        String query = "SELECT * FROM " + TABLE_AUTHORS + " WHERE " + COLUMN_AUTHORNAME +"=\"" + authorName + "\";";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        if(c.getCount()==0) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_AUTHORNAME, a.getmName());
+
+            db.insert(TABLE_AUTHORS, null, values);
+            db.close();
+            return true;
+
+        }
+        else{
+            db.close();
+            return false;
+        }
     }
 
     //Delete row from the database
-    public void deleteProduct(String authorName){
+    public void deleteAuthor(String authorName){
         SQLiteDatabase db = getWritableDatabase();
 
         db.execSQL("DELETE FROM " + TABLE_AUTHORS + " WHERE " +
@@ -55,10 +72,10 @@ public class myDBHandler extends SQLiteOpenHelper {
     }
 
     //toString method
-    public String databaseToString(){
+    public ArrayList<String> databaseToString(){
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
-
+        ArrayList<String> al = new ArrayList<String>();
         String query = "SELECT * FROM " + TABLE_AUTHORS + " WHERE 1;";
 
         Cursor c = db.rawQuery(query, null);
@@ -66,12 +83,12 @@ public class myDBHandler extends SQLiteOpenHelper {
 
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("authorname")) != null) {
-                dbString += c.getString(c.getColumnIndex("authorname"));
-                dbString += "\n";
+                al.add(c.getString(c.getColumnIndex("authorname")));
+                //dbString += "\n";
             }
             c.moveToNext();
         }
         db.close();
-        return dbString;
+        return al;
     }
 }

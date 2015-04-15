@@ -3,11 +3,14 @@ package com.example.jaishmael.booker;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.AdapterView;
@@ -27,18 +30,33 @@ public class HomeActivity extends Activity {
 
     myDBHandler mDBHandler;
     private static SearchView mSearch;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        mDBHandler = new myDBHandler(this,null,null,1);
         mSearch = (SearchView)findViewById(R.id.searchView);
         Log.d("app:", "*******Home Activity Started");
+        lv = (ListView) findViewById(R.id.listView);
         ActionBar actionBar = super.getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setIcon(R.drawable.logo);
         actionBar.setDisplayShowHomeEnabled(true);
+        initList();
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String temp = (String) lv.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();
+                initList();
+
+            }
+        });
+
+
         mSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(HomeActivity.this, SearchableActivity.class);
@@ -54,34 +72,7 @@ public class HomeActivity extends Activity {
         });
 
 
-        initList();
 
-        // We get the ListView component from the layout
-
-        ListView lv = (ListView) findViewById(R.id.listView);
-
-        // This is a simple adapter that accepts as parameter
-        // Context
-        // Data list
-        // The row layout that is used during the row creation
-        // The keys used to retrieve the data
-        // The View id used to show the data. The key number and the view id must match
-        SimpleAdapter simpleAdpt = new SimpleAdapter(this, bookList, android.R.layout.simple_list_item_1, new String[] {"key"}, new int[] {android.R.id.text1});
-
-        lv.setAdapter(simpleAdpt);
-        // React to user clicks on item
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parentAdapter, View view, int position,
-                                    long id) {
-
-                // We know the View is a TextView so we can cast it
-                TextView clickedView = (TextView) view;
-
-                Toast.makeText(HomeActivity.this, "Item with id [" + id + "] - Position [" + position + "] - Planet [" + clickedView.getText() + "]", Toast.LENGTH_SHORT).show();
-
-            }
-        });
         mSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(HomeActivity.this, SearchableActivity.class);
@@ -98,18 +89,13 @@ public class HomeActivity extends Activity {
     }
 
     // The data to show
-    List<Map<String, String>> bookList = new ArrayList<Map<String,String>>();
+    //List<Map<String, String>> bookList = new ArrayList<Map<String,String>>();
 
     private void initList() {
-        // We populate the books
-
-        bookList.add(createBook("key", "Book 1"));
-        bookList.add(createBook("key", "Book 2"));
-        bookList.add(createBook("key", "Book 3"));
-        bookList.add(createBook("key", "Book 4"));
-        bookList.add(createBook("key", "Book 5"));
-        bookList.add(createBook("key", "Book 6"));
-        bookList.add(createBook("key", "Book 7"));
+        ArrayList<String> al = mDBHandler.databaseToString();
+        Log.d("***ALSIZE:", "" + al.size());
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al);
+        lv.setAdapter(mAdapter);
 
     }
 
@@ -127,7 +113,10 @@ public class HomeActivity extends Activity {
         return true;
     }
 
-
+    public void onResume(){
+        super.onResume();
+        initList();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
