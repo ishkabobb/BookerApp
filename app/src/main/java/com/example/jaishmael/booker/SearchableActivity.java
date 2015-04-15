@@ -20,30 +20,25 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+
 
 import java.io.BufferedReader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class SearchableActivity extends Activity {
-
+    public static String returnedresult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
         Log.d("app:", "Started");
 
+        returnedresult = "";
         Intent intent = getIntent();
         String query = intent.getStringExtra(SearchManager.QUERY);
 
@@ -121,6 +116,8 @@ public class SearchableActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            returnedresult = builder.toString();
+            Log.d("**************APP", builder.toString());
             return builder.toString();
         }
 
