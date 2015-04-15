@@ -75,6 +75,7 @@ public class SearchableActivity extends Activity {
             //GoodReads Secret API Key: BKnbOex3bXD1WcVT25PeCJvErjSkrP3YWA9AAsnVbnI
             //must display goodreads logo
         getRequest(query);
+        Log.d("************APP", "ResultString:" + returnedresult);
 
     }
 
@@ -90,9 +91,14 @@ public class SearchableActivity extends Activity {
     }
 
     public void getRequest(String query){ //place holder
+        String data = "no";
+        try {
+            data = new RunSearch().execute(query).get();
+        }
+        catch (Exception e){
 
-        new RunSearch().execute(query);
-
+        }
+        Log.d("**************APP", "Data " + data);
     }
 
 
@@ -114,7 +120,7 @@ public class SearchableActivity extends Activity {
     //private class
     private class RunSearch extends AsyncTask<String, Void, String> {
         private Exception e;
-
+        
         protected String doInBackground(String ...query){
 
 
@@ -145,13 +151,12 @@ public class SearchableActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            returnedresult = builder.toString();
-            Log.d("**************APP", builder.toString());
+
             return builder.toString();
         }
 
         protected void onPostExecute(String result){
-
+           
 
         }
         @Override
