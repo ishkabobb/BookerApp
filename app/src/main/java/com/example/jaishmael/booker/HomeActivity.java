@@ -3,8 +3,6 @@ package com.example.jaishmael.booker;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,18 +13,10 @@ import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
 
 public class HomeActivity extends Activity {
-    //Final Git Test
 
     myDBHandler mDBHandler;
     private static SearchView mSearch;
@@ -56,7 +46,6 @@ public class HomeActivity extends Activity {
             }
         });
 
-
         mSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(HomeActivity.this, SearchableActivity.class);
@@ -68,11 +57,8 @@ public class HomeActivity extends Activity {
             public boolean onQueryTextChange(String newText) {
                 return true;
             }
-
         });
 
-
-
         mSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(HomeActivity.this, SearchableActivity.class);
@@ -84,26 +70,14 @@ public class HomeActivity extends Activity {
             public boolean onQueryTextChange(String newText) {
                 return true;
             }
-
         });
     }
-
-    // The data to show
-    //List<Map<String, String>> bookList = new ArrayList<Map<String,String>>();
 
     private void initList() {
         ArrayList<String> al = mDBHandler.databaseToString();
         Log.d("***ALSIZE:", "" + al.size());
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al);
         lv.setAdapter(mAdapter);
-
-    }
-
-    private HashMap<String, String> createBook (String key, String name) {
-        HashMap<String, String> planet = new HashMap<String, String>();
-        planet.put(key, name);
-
-        return planet;
     }
 
     @Override
@@ -127,10 +101,8 @@ public class HomeActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
