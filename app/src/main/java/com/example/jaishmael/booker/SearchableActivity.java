@@ -1,5 +1,6 @@
 package com.example.jaishmael.booker;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -39,6 +40,10 @@ public class SearchableActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
+        ActionBar actionBar = super.getActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setIcon(R.drawable.logo);
+        actionBar.setDisplayShowHomeEnabled(true);
         Log.d("app:", "Started");
         mListView = (ListView)findViewById(R.id.searchlistView);
         mDBHandler = new myDBHandler(this, null, null, 1);
@@ -53,10 +58,14 @@ public class SearchableActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = (String) mListView.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), "Added Author: " + temp, Toast.LENGTH_SHORT).show();
                 Author a = new Author(temp);
                 if(!mDBHandler.addAuthor(a)){
                     Toast.makeText(getApplicationContext(), "Item already exists", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Added Author: " + temp, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SearchableActivity.this, HomeActivity.class);
+                    SearchableActivity.this.startActivity(intent);
                 };
             }
         });
