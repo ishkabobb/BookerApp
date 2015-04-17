@@ -32,6 +32,7 @@
         android:layout_height="match_parent"
         android:id="@+id/listView"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imageView"/>
+        android:layout_below="@+id/imageView"
+        android:background="@color/primary"/>
 
 </RelativeLayout>

@@ -8,19 +8,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.AdapterView;
-import android.widget.ListView;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HomeActivity extends Activity {
 
     myDBHandler mDBHandler;
     private static SearchView mSearch;
     ListView lv;
+    private static String author;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,12 @@ public class HomeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = (String) lv.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();     //Not Needed
                 initList();
+                author = temp;
+                //Intent intent2 = new Intent(HomeActivity.this, InfoActivity.class);                   //Broken
+                //intent2.putExtra("query", author);                                                    //Broken
+                //HomeActivity.this.startActivity(intent2);                                             //Broken
 
             }
         });
@@ -104,5 +109,8 @@ public class HomeActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public static String getAuthor(){
+        return author;
     }
 }
