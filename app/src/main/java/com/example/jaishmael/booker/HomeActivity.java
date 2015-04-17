@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -41,12 +40,12 @@ public class HomeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = (String) lv.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();     //Not Needed
+                //Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();     //Not Needed
                 initList();
                 author = temp;
-                //Intent intent2 = new Intent(HomeActivity.this, InfoActivity.class);                   //Broken
-                //intent2.putExtra("query", author);                                                    //Broken
-                //HomeActivity.this.startActivity(intent2);                                             //Broken
+                Intent intent = new Intent(HomeActivity.this, InfoActivity.class);                   //Broken
+                intent.putExtra("query", author);                                                    //Broken
+                HomeActivity.this.startActivity(intent);                                             //Broken
 
             }
         });

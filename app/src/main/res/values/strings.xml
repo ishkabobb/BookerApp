@@ -8,5 +8,6 @@
     <string name="search_settings">Search</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="title_activity_info">InfoActivity</string>
 
 </resources>

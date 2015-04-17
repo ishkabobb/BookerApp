@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingLeft="16dp"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
@@ -23,6 +23,41 @@
         android:layout_above="@+id/imageViewBooks"
         >
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Author Name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/authorTextView"
+            android:layout_gravity="center_horizontal|top"/>
+
+        <TextView
+            android:layout_width="221dp"
+            android:layout_height="112dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="  This is where we can pull some information about the author. If we can't do this then oh well. Z------------------  Image would go here. Only if we have time will we implement this feature.   "
+            android:id="@+id/textView"
+            android:layout_gravity="right|center_vertical"/>
+
+        <ImageView
+            android:layout_width="91dp"
+            android:layout_height="91dp"
+            android:id="@+id/imageView2"
+            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/ic_launcher"/>
+
+        <TextView
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Link"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textColor="@color/primary_dark"
+            android:textColorLink="@color/white"
+            android:textIsSelectable="false"
+            android:textStyle="bold|italic"/>
 
     </FrameLayout>
 
