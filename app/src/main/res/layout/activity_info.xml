@@ -17,28 +17,35 @@
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/imageViewInfo"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/imageViewBooks"
+        android:background="@drawable/bg_card"
         >
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="277dp"
             android:layout_height="wrap_content"
             android:text="Author Name"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/authorTextView"
-            android:layout_gravity="center_horizontal|top"/>
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="@color/primary_dark"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"/>
 
         <TextView
-            android:layout_width="221dp"
-            android:layout_height="112dp"
+            android:layout_width="194dp"
+            android:layout_height="121dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="  This is where we can pull some information about the author. If we can't do this then oh well. Z------------------  Image would go here. Only if we have time will we implement this feature.   "
             android:id="@+id/textView"
-            android:layout_gravity="right|center_vertical"/>
+            android:layout_gravity="right|bottom"
+            android:textColor="@color/primary_dark"
+            />
 
         <ImageView
             android:layout_width="91dp"
@@ -46,18 +53,6 @@
             android:id="@+id/imageView2"
             android:layout_gravity="left|center_vertical"
             android:src="@drawable/ic_launcher"/>
-
-        <TextView
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Link"
-            android:id="@+id/textView2"
-            android:layout_gravity="center_horizontal|bottom"
-            android:textColor="@color/primary_dark"
-            android:textColorLink="@color/white"
-            android:textIsSelectable="false"
-            android:textStyle="bold|italic"/>
 
     </FrameLayout>
 
@@ -74,6 +69,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/bookslistView"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imageViewBooks"/>
+        android:layout_below="@+id/imageViewBooks"
+        android:divider="#000000"/>
 
 </RelativeLayout>

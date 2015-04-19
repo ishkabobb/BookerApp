@@ -3,18 +3,23 @@ package com.example.jaishmael.booker;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -24,6 +29,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +41,7 @@ public class SearchableActivity extends Activity {
     ListView mListView;
     ArrayList<String> al;
     myDBHandler mDBHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +82,7 @@ public class SearchableActivity extends Activity {
         for(int i =0; i<al.size();i++)
             Log.d("***ITEM==","" + al.get(i));
         Log.d("****APPALGHT: ", ""+ al.size());
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al);
+        searchAdapter<String> mAdapter = new searchAdapter<String>(this, al);
         mListView.setAdapter(mAdapter);
     }
 
@@ -177,5 +184,49 @@ public class SearchableActivity extends Activity {
 
     }
 
+}
+class searchAdapter<String> extends BaseAdapter {
 
+    Context context;
+    ArrayList<String> data;
+    private static LayoutInflater inflater = null;
+
+    public searchAdapter(Context context, ArrayList<String> data) {
+        // TODO Auto-generated constructor stub
+        this.context = context;
+        this.data = data;
+        inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        // TODO Auto-generated method stub
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
+        View vi = convertView;
+        if (vi == null)
+            vi = inflater.inflate(R.layout.row2, null);
+        TextView text = (TextView) vi.findViewById(R.id.authorNameSearch);
+        text.setTypeface(HomeActivity.getFont());
+        text.setText(data.get(position).toString());
+
+        return vi;
+    }
 }

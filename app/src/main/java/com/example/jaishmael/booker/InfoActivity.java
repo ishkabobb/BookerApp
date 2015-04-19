@@ -27,6 +27,7 @@ public class InfoActivity extends Activity {
         author = HomeActivity.getAuthor();
         mBookList = (ListView)findViewById(R.id.bookslistView);
         authorText = (TextView)findViewById(R.id.authorTextView);
+        authorText.setTypeface(HomeActivity.getFont());
         authorText.setText(author);
 
 
