@@ -2,14 +2,18 @@ package com.example.jaishmael.booker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,7 +68,9 @@ public class InfoActivity extends Activity {
         }
         catch (Exception e){
         }
-        bookSearch(data);
+        ArrayList<Book> books = bookSearch(data);
+        infoAdapter mInAdapter = new infoAdapter(this, books);
+        mBookList.setAdapter(mInAdapter);
 
     }
 
@@ -91,7 +97,7 @@ public class InfoActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void bookSearch(String data) {
+    public ArrayList<Book> bookSearch(String data) {
         al = new ArrayList<Book>();
         ArrayList tags = new ArrayList();
         String authorname = "",isbn = "",booktitle = "",year = "", cover = "", authorpic = "";
@@ -153,6 +159,7 @@ public class InfoActivity extends Activity {
         catch (Exception e) {
             e.printStackTrace();
         }
+        return al;
     }
 
     private class GetAuthorPic extends AsyncTask<String, Void, Bitmap> {
@@ -248,6 +255,49 @@ public class InfoActivity extends Activity {
         @Override
         protected void onProgressUpdate(Void... values) {
         }
+    }
+}
+class infoAdapter extends ArrayAdapter<Book> {
 
+    Context context;
+    ArrayList<Book> data;
+    private static LayoutInflater inflater = null;
+
+    public infoAdapter(Context context, ArrayList<Book> data) {
+        super(context,0,data);
+        this.context = context;
+        this.data = data;
+        inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return data.size();
+    }
+
+    @Override
+    public Book getItem(int position) {
+        // TODO Auto-generated method stub
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Book b = getItem(position);
+        View vi = convertView;
+        if (vi == null)
+            vi = inflater.inflate(R.layout.row3, null);
+        TextView text = (TextView) vi.findViewById(R.id.bookName);
+        text.setTypeface(HomeActivity.getFont());
+        text.setText(b.getTitle());
+        return vi;
     }
 }
