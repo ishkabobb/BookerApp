@@ -79,9 +79,7 @@ public class SearchableActivity extends Activity {
     }
 
     public void updatelist(ArrayList al){
-        for(int i =0; i<al.size();i++)
-            Log.d("***ITEM==","" + al.get(i));
-        Log.d("****APPALGHT: ", ""+ al.size());
+
         searchAdapter<String> mAdapter = new searchAdapter<String>(this, al);
         mListView.setAdapter(mAdapter);
     }

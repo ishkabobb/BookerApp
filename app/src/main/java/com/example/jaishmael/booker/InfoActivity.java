@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class InfoActivity extends Activity {
@@ -60,11 +61,9 @@ public class InfoActivity extends Activity {
         Log.d("***APPANAME:", "" + author);
         String data = "";
 
-
-
-
         try {
             data = new GetInfo().execute(author).get();
+
         }
         catch (Exception e){
         }
@@ -153,6 +152,7 @@ public class InfoActivity extends Activity {
                 }
             }
             new GetAuthorPic().execute(authorpic);
+            new GetAuthorInfo().execute(authorpic);
 
             //updatelist(al);
         }
@@ -160,6 +160,92 @@ public class InfoActivity extends Activity {
             e.printStackTrace();
         }
         return al;
+    }
+
+    private class GetAuthorInfo extends AsyncTask<String, Void, String> {
+        private Exception e;
+        TextView tv = (TextView)findViewById(R.id.textView);
+
+        protected String doInBackground(String... query) {
+            StringBuilder builder = new StringBuilder();
+            HttpClient client = new DefaultHttpClient();
+            String search = query[0];
+            String request = "https://openlibrary.org/authors/" + search + ".json";
+
+
+            HttpGet httpGet = new HttpGet(request);
+            try {
+                HttpResponse response = client.execute(httpGet);
+                StatusLine statusLine = response.getStatusLine();
+                int statusCode = statusLine.getStatusCode();
+                if (statusCode == 200) {
+                    HttpEntity entity = response.getEntity();
+                    InputStream content = entity.getContent();
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(content));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        builder.append(line);
+                    }
+                } else {
+                    Log.e("APP", "Failed to download file");
+
+                }
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return builder.toString();
+        }
+
+        protected void onPostExecute(String info) {
+            String authorinfo ="", bio = "No Bio available.", death = "", birth = "";
+
+            try {
+                JSONObject jo = new JSONObject(info);
+
+                   try {
+                        bio = jo.getString("bio");//bio
+                        bio = bio.replaceAll("\",", "");
+                        } catch (Exception e) {
+                    }
+
+                    try {
+                        death = jo.getString("death_date");
+                        death = death.replaceAll("\",", "");
+                    } catch (Exception e) {
+                        Log.d("***APPANAME:", "Failed to get death");
+                    }
+
+                    try {
+                        birth = jo.getString("birth_date");
+                        birth = birth.replaceAll("\",", "");
+                    } catch (Exception e) {
+                        Log.d("***APPANAME:", "Failed to get birthday");
+                    }
+                }catch (Exception e){}
+
+                authorinfo = bio;
+
+                if (!birth.equals("")){
+                    authorinfo = authorinfo + " Born: " + birth;
+                }
+
+                if (!death.equals("")){
+                    authorinfo = authorinfo + " Died: " + death;
+                }
+                tv.setText(authorinfo);
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
     }
 
     private class GetAuthorPic extends AsyncTask<String, Void, Bitmap> {
