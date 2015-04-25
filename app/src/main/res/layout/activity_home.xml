@@ -33,6 +33,7 @@
         android:id="@+id/listView"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView"
-        android:background="@color/primary"/>
+        android:background="@color/primary_light"
+        android:divider="#000000"/>
 
 </RelativeLayout>

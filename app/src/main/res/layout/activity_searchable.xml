@@ -20,5 +20,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchlistView"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imageViewSearch"/>
+        android:layout_below="@+id/imageViewSearch"
+        android:divider="#000000"/>
 </RelativeLayout>

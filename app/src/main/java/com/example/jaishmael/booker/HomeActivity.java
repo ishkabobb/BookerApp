@@ -2,16 +2,21 @@ package com.example.jaishmael.booker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,6 +26,7 @@ public class HomeActivity extends Activity {
     private static SearchView mSearch;
     ListView lv;
     private static String author;
+    public static Typeface font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,9 @@ public class HomeActivity extends Activity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setIcon(R.drawable.logo);
         actionBar.setDisplayShowHomeEnabled(true);
+        font = Typeface.createFromAsset(getAssets(), "fonts/Tangerine_Bold.ttf");
         initList();
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,7 +88,7 @@ public class HomeActivity extends Activity {
     private void initList() {
         ArrayList<String> al = mDBHandler.databaseToString();
         Log.d("***ALSIZE:", "" + al.size());
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al);
+        yourAdapter<String> mAdapter = new yourAdapter(this, al);
         lv.setAdapter(mAdapter);
     }
 
@@ -111,5 +119,53 @@ public class HomeActivity extends Activity {
     }
     public static String getAuthor(){
         return author;
+    }
+    public static Typeface getFont(){
+        return font;
+    }
+}
+class yourAdapter<String> extends BaseAdapter {
+
+    Context context;
+    ArrayList<String> data;
+    private static LayoutInflater inflater = null;
+
+    public yourAdapter(Context context, ArrayList<String> data) {
+        // TODO Auto-generated constructor stub
+        this.context = context;
+        this.data = data;
+        inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        // TODO Auto-generated method stub
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
+        View vi = convertView;
+        if (vi == null)
+            vi = inflater.inflate(R.layout.row, null);
+        TextView text = (TextView) vi.findViewById(R.id.authorName);
+        text.setTypeface(HomeActivity.getFont());
+        text.setText(data.get(position).toString());
+
+        return vi;
     }
 }
