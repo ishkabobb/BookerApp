@@ -85,12 +85,13 @@ public class InfoActivity extends Activity {
     public void bookSearch(String data) {
         al = new ArrayList<Book>();
         ArrayList tags = new ArrayList();
-        String authorname = "",isbn = "",booktitle = "",year = "";
+        String authorname = "",isbn = "",booktitle = "",year = "", cover = "", authorpic = "";
         try {
             JSONObject jsonObject = new JSONObject(data);
             JSONArray jb = jsonObject.getJSONArray("docs");
             for (int i = 0; i < jb.length(); i++){
                 JSONObject jarr = jb.getJSONObject(i);
+
                 try {
                     booktitle = jarr.getString("title");//Title
                     booktitle = booktitle.replaceAll("\",", "");
@@ -98,31 +99,40 @@ public class InfoActivity extends Activity {
                 }catch (Exception e){}
 
                 try{
-                isbn = jarr.getJSONArray("isbn").getString(0); //ISBN
-                isbn = isbn.replaceAll("\",", "");
-                Log.d("***APPANAME:", "" + isbn);
-                }catch (Exception e){}
+                    cover = jarr.getJSONArray("edition_key").getString(0);
+                    cover = cover.replaceAll("\",", "");
+                }catch (Exception e){ Log.d("***APPANAME:", "Failed to get Cover for " + booktitle);}
 
                 try{
-                authorname = jarr.getJSONArray("author_name").getString(0);//Author
-                authorname = authorname.replaceAll("\",", "");
-                Log.d("***APPANAME:", "" + authorname);
-                }catch (Exception e){}
+                    authorpic = jarr.getJSONArray("author_key").getString(0);
+                    authorpic = authorpic.replaceAll("\",", "");
+                }catch (Exception e){ Log.d("***APPANAME:", "Failed to get authorpic for " + booktitle);}
+
                 try{
-                JSONArray tagsarray = jarr.getJSONArray("subject"); //tags
-                for (int y = 0; y<tagsarray.length(); y++){
-                    String tagname = tagsarray.getString(y);
-                    tagname = tagname.replaceAll("\",", "");
-                    Log.d("***APPANAME:", "" + tagname);
-                    tags.add(tagname);
-                }
-                }catch (Exception e){}
+                    isbn = jarr.getJSONArray("isbn").getString(0); //ISBN
+                    isbn = isbn.replaceAll("\",", "");
+                }catch (Exception e){ Log.d("***APPANAME:", "Failed to get ISBN for " + booktitle);}
+
                 try{
-                year = jarr.getString("first_publish_year");
-                year = year.replaceAll("\",", "");
-                Log.d("***APPANAME:", "" + year);
-                }catch (Exception e){}
-                Book newbook = new Book(booktitle,authorname,isbn,year,tags);
+                    authorname = jarr.getJSONArray("author_name").getString(0);//Author
+                    authorname = authorname.replaceAll("\",", "");
+                }catch (Exception e){Log.d("***APPANAME:", "Failed to get Authorname for " + booktitle);}
+
+                try{
+                    JSONArray tagsarray = jarr.getJSONArray("subject"); //tags
+                    for (int y = 0; y<tagsarray.length(); y++){
+                        String tagname = tagsarray.getString(y);
+                        tagname = tagname.replaceAll("\",", "");
+                        tags.add(tagname);
+                    }
+                }catch (Exception e){Log.d("***APPANAME:", "Failed to get tags for " + booktitle);}
+
+                try{
+                    year = jarr.getString("first_publish_year");
+                    year = year.replaceAll("\",", "");
+                }catch (Exception e){Log.d("***APPANAME:", "Failed to get year for " + booktitle);}
+
+                Book newbook = new Book(booktitle,authorname,isbn,year, cover,tags);
                 if(!al.contains(newbook)) {
                     al.add(newbook);
                 }
