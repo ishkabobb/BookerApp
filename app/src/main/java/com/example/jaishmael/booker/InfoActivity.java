@@ -296,7 +296,7 @@ class infoAdapter extends ArrayAdapter<Book> {
         if (vi == null)
             vi = inflater.inflate(R.layout.row3, null);
         TextView text = (TextView) vi.findViewById(R.id.bookName);
-        text.setTypeface(HomeActivity.getFont());
+        //text.setTypeface(HomeActivity.getFont());
         text.setText(b.getTitle());
         return vi;
     }
