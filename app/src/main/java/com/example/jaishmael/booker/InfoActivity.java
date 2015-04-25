@@ -2,6 +2,9 @@ package com.example.jaishmael.booker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -50,6 +55,10 @@ public class InfoActivity extends Activity {
         authorText.setText(author);
         Log.d("***APPANAME:", "" + author);
         String data = "";
+
+
+
+
         try {
             data = new GetInfo().execute(author).get();
         }
@@ -137,11 +146,58 @@ public class InfoActivity extends Activity {
                     al.add(newbook);
                 }
             }
+            new GetAuthorPic().execute(authorpic);
+
             //updatelist(al);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private class GetAuthorPic extends AsyncTask<String, Void, Bitmap> {
+        private Exception e;
+        ImageView img = (ImageView)findViewById(R.id.imageView2);
+
+        protected Bitmap doInBackground(String... query) {
+            Bitmap bitmap = null;
+            try {
+                String id = query[0];
+                Log.d("***APPANAME:", "Authorpic id:  " + id);
+                URL url = new URL ("http://covers.openlibrary.org/a/olid/" + id + "-M.jpg");
+                Log.d("***APPANAME:", "Authorpic url:  " + url);
+                HttpGet httpRequest = null;
+                httpRequest = new HttpGet((url.toURI()));
+                HttpClient httpclient = new DefaultHttpClient();
+
+                HttpResponse response = (HttpResponse) httpclient.execute(httpRequest);
+
+                HttpEntity entity = response.getEntity();
+                BufferedHttpEntity b_entity = new BufferedHttpEntity(entity);
+                InputStream input = b_entity.getContent();
+
+                bitmap = BitmapFactory.decodeStream(input);
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap bm) {
+            img.setImageBitmap(bm);
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
     }
 
 
@@ -154,6 +210,7 @@ public class InfoActivity extends Activity {
             String search = query[0].replaceAll("\\s+", "%20");
             String request = "http://openlibrary.org/search.json?author=" + search;
             request = request + "&jscmd=data&format=json";
+
 
             HttpGet httpGet = new HttpGet(request);
             try {
@@ -171,6 +228,7 @@ public class InfoActivity extends Activity {
                     }
                 } else {
                     Log.e("APP", "Failed to download file");
+
                 }
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
