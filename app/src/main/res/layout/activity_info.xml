@@ -58,12 +58,12 @@
 
             <TextView
                 android:layout_width="210dp"
-                android:layout_height="121dp"
+                android:layout_height="115dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="  This is where we can pull some information about the author. If we can't do this then oh well. Z------------------  Image would go here. Only if we have time will we implement this feature.   "
                 android:id="@+id/textView"
                 android:textColor="@color/primary_dark"
-                android:layout_weight="0.35"/>
+                android:layout_gravity="bottom"/>
 
         </LinearLayout>
 
