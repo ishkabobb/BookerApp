@@ -91,6 +91,7 @@ public class BookActivity extends Activity {
         year = book.getYear();
         coverid = book.getCoverid();
         tags = book.getTags();
+        Object tag2 = null;
 
         //ImageView iV = (ImageView) findViewById(R.id.imageViewBook);
 
@@ -103,14 +104,17 @@ public class BookActivity extends Activity {
         isbnTextView = (TextView) findViewById(R.id.isbnTextView);
         isbnTextView.setText("  ISBN: "+ isbn);
         descTextView = (TextView) findViewById(R.id.descTextView);
-        Object tag2 = tags.get(0);
-        String tag2Name = tag2.toString();
         String desc = "Tags: ";
-        desc += tag2Name;
-        for (int i = 0; i < tags.size(); i++){
-            Object tag = tags.get(i);
-            String tagName = tag.toString();
-            desc+= ", " + tagName;
+        if (tags.size() != 0) {
+            tag2 = tags.get(0);
+            String tag2Name = tag2.toString();
+            desc = "Tags: ";
+            desc += tag2Name;
+            for (int i = 0; i < tags.size(); i++) {
+                Object tag = tags.get(i);
+                String tagName = tag.toString();
+                desc += ", " + tagName;
+            }
         }
         desc += ".";
         descTextView.setText(desc);

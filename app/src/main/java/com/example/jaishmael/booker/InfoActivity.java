@@ -191,6 +191,8 @@ public class InfoActivity extends Activity {
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
             String search = query[0];
+            search = search.replaceAll("\\'","");
+            Log.d("***url string", "" + search);
             String request = "https://openlibrary.org/authors/" + search + ".json";
 
 
@@ -328,6 +330,9 @@ public class InfoActivity extends Activity {
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
             String search = query[0].replaceAll("\\s+", "%20");
+            search = search.replaceAll("'","");
+            search = search.replaceAll("`","");
+            Log.d("***url string", "" + search);
             //search = search.replaceAll("'", "%20"); Doesn't Work
             String request = "http://openlibrary.org/search.json?author=" + search;
             request = request + "&jscmd=data&format=json";
