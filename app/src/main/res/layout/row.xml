@@ -35,17 +35,6 @@
                 android:textStyle="bold"
                 android:textSize="30dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Next Release: \n 24 Hours"
-                android:id="@+id/nextRelease"
-                android:textColor="@color/primary_dark"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical|center_horizontal"
-                android:textStyle="bold"/>
-
         </LinearLayout>
 
 </FrameLayout>

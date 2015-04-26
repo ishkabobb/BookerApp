@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +41,7 @@ public class BookActivity extends Activity {
     TextView yearTextView;
     TextView descTextView;
     Button amazon;
-    Button add;
+    Button home;
     Button more;
     myDBHandler mDBHandler;
 
@@ -125,6 +124,15 @@ public class BookActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(BookActivity.this, InfoActivity.class);
                 intent.putExtra("query", author);
+                BookActivity.this.startActivity(intent);
+            }
+        });
+        home = (Button) findViewById(R.id.homeButton);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookActivity.this, HomeActivity.class);
+                //intent.putExtra("query", author);
                 BookActivity.this.startActivity(intent);
             }
         });

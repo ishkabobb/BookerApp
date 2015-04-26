@@ -110,25 +110,19 @@
         </LinearLayout>
     </FrameLayout>
 
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
-        android:layout_below="@+id/frameLayout2"
-        android:layout_centerHorizontal="true"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Search Google Play Store"
         android:id="@+id/amazonButton"
-        android:layout_below="@+id/ratingBar"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/bg_card"
         android:textColor="@color/primary_dark"
         android:clickable="false"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        android:layout_below="@+id/frameLayout2"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:layout_width="match_parent"
@@ -142,6 +136,19 @@
         android:textSize="20dp"
         android:layout_below="@+id/amazonButton"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="6dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return Home"
+        android:id="@+id/homeButton"
+        android:background="@drawable/bg_card"
+        android:textColor="@color/primary_dark"
+        android:clickable="false"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
