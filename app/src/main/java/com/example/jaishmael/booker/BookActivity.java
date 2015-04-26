@@ -113,9 +113,9 @@ public class BookActivity extends Activity {
         protected Bitmap doInBackground(String... query) {
             Bitmap bitmap = null;
             try {
-                String id = coverid;
+                String id = query[0];
                 //Log.d("***APPANAME:", "Authorpic id:  " + id);
-                URL url = new URL ("http://covers.openlibrary.org/a/olid/" + id + "-M.jpg");
+                URL url = new URL ("http://covers.openlibrary.org/b/olid/" + id + "-M.jpg");
                 //Log.d("***APPANAME:", "Authorpic url:  " + url);
                 HttpGet httpRequest = null;
                 httpRequest = new HttpGet((url.toURI()));
