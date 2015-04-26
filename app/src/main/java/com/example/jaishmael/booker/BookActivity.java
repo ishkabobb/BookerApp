@@ -2,12 +2,16 @@ package com.example.jaishmael.booker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +40,10 @@ public class BookActivity extends Activity {
     TextView isbnTextView;
     TextView yearTextView;
     TextView descTextView;
+    Button amazon;
+    Button add;
+    Button more;
+    myDBHandler mDBHandler;
 
 
     @Override
@@ -104,6 +112,27 @@ public class BookActivity extends Activity {
         }
         desc += ".";
         descTextView.setText(desc);
+
+        amazon = (Button) findViewById(R.id.amazonButton);
+        amazon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://play.google.com/store/search?q="+title+"&c=books&hl=en";
+                Uri uriUrl = Uri.parse(url);
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
+            }
+        });
+
+        more = (Button) findViewById(R.id.moreByAuthor);
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookActivity.this, InfoActivity.class);                   //Broken
+                intent.putExtra("query", author);                                                    //Broken
+                BookActivity.this.startActivity(intent);
+            }
+        });
     }
 
     private class GetCoverPic extends AsyncTask<String, Void, Bitmap> {

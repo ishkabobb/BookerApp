@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageViewBook"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/author"/>
+        android:src="@drawable/book"/>
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="270dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_card"
         android:id="@+id/frameLayout2"
@@ -120,7 +120,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search Book On Amazon"
+        android:text="Search Google Play Store"
         android:id="@+id/amazonButton"
         android:layout_below="@+id/ratingBar"
         android:layout_centerHorizontal="true"
@@ -133,7 +133,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="More by this Author"
+        android:text="About this Author"
         android:id="@+id/moreByAuthor"
         android:background="@drawable/bg_card"
         android:textColor="@color/primary_dark"
@@ -142,20 +142,6 @@
         android:textSize="20dp"
         android:layout_below="@+id/amazonButton"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Author to Tracker"
-        android:id="@+id/addToButton"
-        android:background="@drawable/bg_card"
-        android:textColor="@color/primary_dark"
-        android:clickable="false"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_below="@+id/moreByAuthor"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

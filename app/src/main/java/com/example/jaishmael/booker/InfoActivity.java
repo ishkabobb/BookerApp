@@ -323,9 +323,10 @@ public class InfoActivity extends Activity {
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
             String search = query[0].replaceAll("\\s+", "%20");
+            //search = search.replaceAll("'", "%20"); Doesn't Work
             String request = "http://openlibrary.org/search.json?author=" + search;
             request = request + "&jscmd=data&format=json";
-
+            Log.d("****APP", "Request ="+request);
 
             HttpGet httpGet = new HttpGet(request);
             try {

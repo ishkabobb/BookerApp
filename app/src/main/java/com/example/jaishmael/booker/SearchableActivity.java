@@ -220,7 +220,7 @@ class searchAdapter<String> extends BaseAdapter {
         // TODO Auto-generated method stub
         View vi = convertView;
         if (vi == null)
-            vi = inflater.inflate(R.layout.row3, null);
+            vi = inflater.inflate(R.layout.row2, null);
         TextView text = (TextView) vi.findViewById(R.id.authorNameSearch);
         text.setTypeface(HomeActivity.getFont());
         text.setText(data.get(position).toString());

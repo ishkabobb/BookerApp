@@ -2,7 +2,9 @@ package com.example.jaishmael.booker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -51,10 +53,44 @@ public class HomeActivity extends Activity {
                 //Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();     //Not Needed
                 //initList();
                 author = temp;
+                String a = "'";
+                if (author.contains(a)){
+                    author.replaceAll(a,"%20");
+                }
                 Intent intent = new Intent(HomeActivity.this, InfoActivity.class);                   //Broken
                 intent.putExtra("query", author);                                                    //Broken
                 HomeActivity.this.startActivity(intent);                                             //Broken
 
+            }
+        });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String temp = (String) lv.getItemAtPosition(position);
+                author = temp;
+                //Toast.makeText(getApplicationContext(), "Author " + temp +" has been Deleted.", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(HomeActivity.this);
+                builder1.setMessage("Remove "+temp+" from Tracker?");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                mDBHandler.deleteAuthor(author);
+                                initList();
+                                dialog.cancel();
+                            }
+                        });
+                builder1.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+                //initList();
+                return true;
             }
         });
 
