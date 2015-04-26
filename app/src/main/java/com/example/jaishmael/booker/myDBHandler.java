@@ -37,25 +37,19 @@ public class myDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //Add new row to table
+
     public boolean addAuthor(Author a){
         SQLiteDatabase db = getWritableDatabase();
-
         String authorName = a.getmName();
-
         String query = "SELECT * FROM " + TABLE_AUTHORS + " WHERE " + COLUMN_AUTHORNAME +"=\"" + authorName + "\";";
-
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-
         if(c.getCount()==0) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_AUTHORNAME, a.getmName());
-
             db.insert(TABLE_AUTHORS, null, values);
             db.close();
             return true;
-
         }
         else{
             db.close();
@@ -63,28 +57,24 @@ public class myDBHandler extends SQLiteOpenHelper {
         }
     }
 
-    //Delete row from the database
+
     public void deleteAuthor(String authorName){
         SQLiteDatabase db = getWritableDatabase();
-
         db.execSQL("DELETE FROM " + TABLE_AUTHORS + " WHERE " +
                 COLUMN_AUTHORNAME + "=\"" + authorName + "\";");
     }
 
-    //toString method
+
     public ArrayList<String> databaseToString(){
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<String> al = new ArrayList<String>();
         String query = "SELECT * FROM " + TABLE_AUTHORS + " WHERE 1 ORDER BY " + COLUMN_AUTHORNAME + " ASC;";
-
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("authorname")) != null) {
                 al.add(c.getString(c.getColumnIndex("authorname")));
-                //dbString += "\n";
             }
             c.moveToNext();
         }

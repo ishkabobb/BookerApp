@@ -42,8 +42,6 @@ public class SearchableActivity extends Activity {
     ArrayList<String> al;
     myDBHandler mDBHandler;
 
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
@@ -57,9 +55,6 @@ public class SearchableActivity extends Activity {
         returnedresult = "";
         Intent intent = getIntent();
         String query = intent.getStringExtra(SearchManager.QUERY);
-            //GoodReads API Key: kO8qbnq9i1TznNmTy7kSRA
-            //GoodReads Secret API Key: BKnbOex3bXD1WcVT25PeCJvErjSkrP3YWA9AAsnVbnI
-            //must display goodreads logo
         getRequest(query);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,7 +74,6 @@ public class SearchableActivity extends Activity {
     }
 
     public void updatelist(ArrayList al){
-
         searchAdapter<String> mAdapter = new searchAdapter<String>(this, al);
         mListView.setAdapter(mAdapter);
     }
@@ -87,13 +81,12 @@ public class SearchableActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the options menu from XML
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_searchable, menu);
         return true;
     }
 
-    public void getRequest(String query){ //place holder
+    public void getRequest(String query){
         String data = "no";
         try {
             data = new RunSearch().execute(query).get();
@@ -114,7 +107,6 @@ public class SearchableActivity extends Activity {
                 author = author.substring(2,author.length()-2);
                 if(!al.contains(author)) {
                     al.add(author);
-                    Log.d("***APPANAME:", "" + author);
                 }
             }
             updatelist(al);
@@ -126,18 +118,13 @@ public class SearchableActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       int id = item.getItemId();
+       if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //private class
     private class RunSearch extends AsyncTask<String, Void, String> {
         private Exception e;
 
@@ -147,7 +134,6 @@ public class SearchableActivity extends Activity {
                 String search = query[0].replaceAll("\\s+", "%20");
                 String request = "http://openlibrary.org/search.json?author=" + search;
                 request = request + "&jscmd=data&format=json";
-
                 HttpGet httpGet = new HttpGet(request);
                 try {
                     HttpResponse response = client.execute(httpGet);
@@ -174,15 +160,13 @@ public class SearchableActivity extends Activity {
             }
         protected void onPostExecute(String result){
         }
-        @Override
+
         protected void onPreExecute() {}
 
-        @Override
         protected void onProgressUpdate(Void... values) {}
-
     }
-
 }
+
 class searchAdapter<String> extends BaseAdapter {
 
     Context context;
@@ -190,41 +174,32 @@ class searchAdapter<String> extends BaseAdapter {
     private static LayoutInflater inflater = null;
 
     public searchAdapter(Context context, ArrayList<String> data) {
-        // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    @Override
     public int getCount() {
-        // TODO Auto-generated method stub
-        return data.size();
+       return data.size();
     }
 
-    @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return data.get(position);
     }
 
-    @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
+   public long getItemId(int position) {
         return position;
     }
 
-    @Override
+
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         View vi = convertView;
         if (vi == null)
             vi = inflater.inflate(R.layout.row2, null);
         TextView text = (TextView) vi.findViewById(R.id.authorNameSearch);
         text.setTypeface(HomeActivity.getFont());
         text.setText(data.get(position).toString());
-
         return vi;
     }
 }

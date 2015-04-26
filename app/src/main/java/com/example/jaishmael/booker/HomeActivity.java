@@ -36,7 +36,6 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         mDBHandler = new myDBHandler(this,null,null,1);
         mSearch = (SearchView)findViewById(R.id.searchView);
-        Log.d("app:", "*******Home Activity Started");
         lv = (ListView) findViewById(R.id.listView);
         ActionBar actionBar = super.getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
@@ -45,21 +44,18 @@ public class HomeActivity extends Activity {
         font = Typeface.createFromAsset(getAssets(), "fonts/Tangerine_Bold.ttf");
         initList();
 
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = (String) lv.getItemAtPosition(position);
-                //Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();     //Not Needed
-                //initList();
                 author = temp;
                 String a = "'";
                 if (author.contains(a)){
                     author.replaceAll(a,"%20");
                 }
-                Intent intent = new Intent(HomeActivity.this, InfoActivity.class);                   //Broken
-                intent.putExtra("query", author);                                                    //Broken
-                HomeActivity.this.startActivity(intent);                                             //Broken
+                Intent intent = new Intent(HomeActivity.this, InfoActivity.class);
+                intent.putExtra("query", author);
+                HomeActivity.this.startActivity(intent);
 
             }
         });
@@ -68,7 +64,6 @@ public class HomeActivity extends Activity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = (String) lv.getItemAtPosition(position);
                 author = temp;
-                //Toast.makeText(getApplicationContext(), "Author " + temp +" has been Deleted.", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(HomeActivity.this);
                 builder1.setMessage("Remove "+temp+" from Tracker?");
                 builder1.setCancelable(true);
@@ -89,7 +84,6 @@ public class HomeActivity extends Activity {
 
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
-                //initList();
                 return true;
             }
         });
@@ -101,7 +95,6 @@ public class HomeActivity extends Activity {
                 HomeActivity.this.startActivity(intent);
                 return true;
             }
-
             public boolean onQueryTextChange(String newText) {
                 return true;
             }
@@ -114,7 +107,6 @@ public class HomeActivity extends Activity {
                 HomeActivity.this.startActivity(intent);
                 return true;
             }
-
             public boolean onQueryTextChange(String newText) {
                 return true;
             }
@@ -129,7 +121,6 @@ public class HomeActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
@@ -141,17 +132,13 @@ public class HomeActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
     public static String getAuthor(){
         return author;
     }
@@ -159,6 +146,7 @@ public class HomeActivity extends Activity {
         return font;
     }
 }
+
 class yourAdapter<String> extends BaseAdapter {
 
     Context context;
@@ -166,7 +154,6 @@ class yourAdapter<String> extends BaseAdapter {
     private static LayoutInflater inflater = null;
 
     public yourAdapter(Context context, ArrayList<String> data) {
-        // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context
@@ -175,32 +162,27 @@ class yourAdapter<String> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return data.get(position);
+       return data.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         View vi = convertView;
         if (vi == null)
             vi = inflater.inflate(R.layout.row, null);
         TextView text = (TextView) vi.findViewById(R.id.authorName);
         text.setTypeface(HomeActivity.getFont());
         text.setText(data.get(position).toString());
-
         return vi;
     }
 }

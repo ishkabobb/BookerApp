@@ -46,8 +46,6 @@ public class BookActivity extends Activity {
     Button more;
     myDBHandler mDBHandler;
 
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
@@ -56,33 +54,24 @@ public class BookActivity extends Activity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setIcon(R.drawable.logo);
         actionBar.setDisplayShowHomeEnabled(true);
-
-
-
-    }
+        }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_book, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
     public void setBookInfo(){
         book = InfoActivity.getBook();
         title = book.getTitle();
@@ -92,9 +81,6 @@ public class BookActivity extends Activity {
         coverid = book.getCoverid();
         tags = book.getTags();
         Object tag2 = null;
-
-        //ImageView iV = (ImageView) findViewById(R.id.imageViewBook);
-
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         titleTextView.setText(title);
         authorTextView = (TextView) findViewById(R.id.authorNameTextView);
@@ -122,7 +108,6 @@ public class BookActivity extends Activity {
             new GetCoverPic().execute(coverid);
         }
         catch (Exception e){}
-
         amazon = (Button) findViewById(R.id.amazonButton);
         amazon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,8 +123,8 @@ public class BookActivity extends Activity {
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BookActivity.this, InfoActivity.class);                   //Broken
-                intent.putExtra("query", author);                                                    //Broken
+                Intent intent = new Intent(BookActivity.this, InfoActivity.class);
+                intent.putExtra("query", author);
                 BookActivity.this.startActivity(intent);
             }
         });
@@ -153,23 +138,15 @@ public class BookActivity extends Activity {
             Bitmap bitmap = null;
             try {
                 String id = query[0];
-                Log.d("***APPANAME:", "Bookpic id:  " + id);
                 URL url = new URL ("http://covers.openlibrary.org/b/olid/" + id + "-M.jpg");
-                Log.d("***APPANAME:", "Bookpic url:  " + url);
                 HttpGet httpRequest = null;
                 httpRequest = new HttpGet((url.toURI()));
                 HttpClient httpclient = new DefaultHttpClient();
-
                 HttpResponse response = (HttpResponse) httpclient.execute(httpRequest);
-
                 HttpEntity entity = response.getEntity();
                 BufferedHttpEntity b_entity = new BufferedHttpEntity(entity);
                 InputStream input = b_entity.getContent();
-
                 bitmap = BitmapFactory.decodeStream(input);
-
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

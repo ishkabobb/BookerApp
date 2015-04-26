@@ -60,9 +60,7 @@ public class InfoActivity extends Activity {
         authorText = (TextView) findViewById(R.id.authorTextView);
         authorText.setTypeface(HomeActivity.getFont());
         authorText.setText(author);
-        Log.d("***APPANAME:", "" + author);
         String data = "";
-
         try {
             data = new GetInfo().execute(author).get();
 
@@ -82,30 +80,20 @@ public class InfoActivity extends Activity {
                 InfoActivity.this.startActivity(intent);
             }
         });
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_info, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -118,11 +106,9 @@ public class InfoActivity extends Activity {
             JSONArray jb = jsonObject.getJSONArray("docs");
             for (int i = 0; i < jb.length(); i++){
                 JSONObject jarr = jb.getJSONObject(i);
-
                 try {
                     booktitle = jarr.getString("title");//Title
                     booktitle = booktitle.replaceAll("\",", "");
-                    Log.d("***APPANAME:", "" + booktitle);
                 }catch (Exception e){}
 
                 try{
