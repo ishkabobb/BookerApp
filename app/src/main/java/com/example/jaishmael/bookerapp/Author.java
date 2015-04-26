@@ -1,4 +1,4 @@
-package com.example.jaishmael.booker;
+package com.example.jaishmael.bookerapp;
 
 /**
  * Created by Evea on 4/13/2015.

@@ -1,4 +1,4 @@
-package com.example.jaishmael.booker;
+package com.example.jaishmael.bookerapp;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -91,9 +91,7 @@ public class InfoActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 

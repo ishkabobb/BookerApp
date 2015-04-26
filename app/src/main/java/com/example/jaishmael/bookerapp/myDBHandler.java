@@ -1,4 +1,4 @@
-package com.example.jaishmael.booker;
+package com.example.jaishmael.bookerapp;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jaishmael.booker" >
+    package="com.example.jaishmael.bookerapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +11,7 @@
         android:logo="@drawable/logo"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".HomeActivity"
+            android:name="com.example.jaishmael.bookerapp.HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchableActivity"
+            android:name="com.example.jaishmael.bookerapp.SearchableActivity"
             android:label="@string/title_activity_searchable" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -34,11 +34,11 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".InfoActivity"
+            android:name="com.example.jaishmael.bookerapp.InfoActivity"
             android:label="@string/title_activity_info" >
         </activity>
         <activity
-            android:name=".BookActivity"
+            android:name="com.example.jaishmael.bookerapp.BookActivity"
             android:label="@string/title_activity_book" >
         </activity>
     </application>
