@@ -3,6 +3,7 @@ package com.example.jaishmael.booker;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,11 +37,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 
 public class InfoActivity extends Activity {
     public static String author;
+    public static Book book;
     ListView mBookList;
     TextView authorText;
     ArrayList<Book> al;
@@ -70,6 +72,17 @@ public class InfoActivity extends Activity {
         ArrayList<Book> books = bookSearch(data);
         infoAdapter mInAdapter = new infoAdapter(this, books);
         mBookList.setAdapter(mInAdapter);
+
+        mBookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Book temp = (Book) mBookList.getItemAtPosition(position);
+                setBook(temp);
+                Intent intent = new Intent(InfoActivity.this, BookActivity.class);
+                InfoActivity.this.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -160,11 +173,19 @@ public class InfoActivity extends Activity {
             e.printStackTrace();
         }
         return al;
+
+    }
+
+    public static void setBook(Book b){
+        book = b;
+    }
+    public static Book getBook(){
+        return book;
     }
 
     private class GetAuthorInfo extends AsyncTask<String, Void, String> {
         private Exception e;
-        TextView tv = (TextView)findViewById(R.id.textView);
+        TextView tv = (TextView)findViewById(R.id.textViewDetails);
 
         protected String doInBackground(String... query) {
             StringBuilder builder = new StringBuilder();
@@ -235,7 +256,7 @@ public class InfoActivity extends Activity {
                 if (!death.equals("")){
                     authorinfo = authorinfo + " Died: " + death;
                 }
-                tv.setText(authorinfo);
+               tv.setText(authorinfo);
         }
 
         @Override
@@ -277,6 +298,7 @@ public class InfoActivity extends Activity {
                 e.printStackTrace();
             }
             return bitmap;
+
         }
 
         protected void onPostExecute(Bitmap bm) {
@@ -344,10 +366,11 @@ public class InfoActivity extends Activity {
     }
 }
 class infoAdapter extends ArrayAdapter<Book> {
-
+    View vi;
     Context context;
     ArrayList<Book> data;
     private static LayoutInflater inflater = null;
+    Book b;
 
     public infoAdapter(Context context, ArrayList<Book> data) {
         super(context,0,data);
@@ -377,13 +400,18 @@ class infoAdapter extends ArrayAdapter<Book> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Book b = getItem(position);
-        View vi = convertView;
+        b = getItem(position);
+        InfoActivity.setBook(b);
+        vi = convertView;
         if (vi == null)
             vi = inflater.inflate(R.layout.row3, null);
         TextView text = (TextView) vi.findViewById(R.id.bookName);
-        //text.setTypeface(HomeActivity.getFont());
+        text.setTypeface(HomeActivity.getFont());
+        ImageView ivCover = (ImageView) vi.findViewById(R.id.imageViewCover);
         text.setText(b.getTitle());
         return vi;
+
     }
+
+
 }

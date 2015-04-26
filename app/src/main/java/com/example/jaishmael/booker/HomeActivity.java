@@ -49,7 +49,7 @@ public class HomeActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String temp = (String) lv.getItemAtPosition(position);
                 //Toast.makeText(getApplicationContext(), "Selected " + temp, Toast.LENGTH_SHORT).show();     //Not Needed
-                initList();
+                //initList();
                 author = temp;
                 Intent intent = new Intent(HomeActivity.this, InfoActivity.class);                   //Broken
                 intent.putExtra("query", author);                                                    //Broken

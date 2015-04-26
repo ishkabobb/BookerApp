@@ -1,0 +1,161 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:background="@color/primary_light"
+                tools:context="com.example.jaishmael.booker.BookActivity">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewBook"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/author"/>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_card"
+        android:id="@+id/frameLayout2"
+        android:layout_below="@+id/imageViewBook">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="123dp"
+            android:id="@+id/imageViewCover"
+            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/ic_launcher"
+            android:layout_marginLeft="8dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|center_vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Book Title"
+                android:id="@+id/titleTextView"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/primary_dark"
+                android:textSize="20dp"
+                android:textStyle="bold|italic"
+                android:textAlignment="center"
+                />
+
+            <TextView
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Author Name"
+                android:id="@+id/authorNameTextView"
+                android:layout_gravity="right"
+                android:textColor="@color/primary_dark"
+                android:textSize="15dp"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="ISBN NUMBER"
+                    android:id="@+id/isbnTextView"
+                    android:layout_marginRight="0dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="12dp"
+                    android:layout_gravity="right|center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Year"
+                    android:id="@+id/textViewYear"
+                    android:textColor="@color/primary_dark"
+                    android:textStyle="italic"
+                    android:textSize="12dp"
+                    android:layout_gravity="left|center_vertical"/>
+
+            </FrameLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView"
+                android:layout_gravity="right">
+
+                <TextView
+                    android:layout_width="191dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="This is where we put all the information of the book and everything like that. We can make this whole box smaller and everything like that."
+                    android:id="@+id/descTextView"
+                    android:layout_gravity="right"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="12dp"/>
+            </ScrollView>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_below="@+id/frameLayout2"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Book On Amazon"
+        android:id="@+id/amazonButton"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_card"
+        android:textColor="@color/primary_dark"
+        android:clickable="false"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="More by this Author"
+        android:id="@+id/moreByAuthor"
+        android:background="@drawable/bg_card"
+        android:textColor="@color/primary_dark"
+        android:clickable="false"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/amazonButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Author to Tracker"
+        android:id="@+id/addToButton"
+        android:background="@drawable/bg_card"
+        android:textColor="@color/primary_dark"
+        android:clickable="false"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/moreByAuthor"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

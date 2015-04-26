@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/author"/>
 
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -25,47 +26,59 @@
         android:id="@+id/frameLayout">
 
 
-        <TextView
-            android:layout_width="277dp"
-            android:layout_height="wrap_content"
-            android:text="Author Name"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/authorTextView"
-            android:layout_gravity="center_horizontal|top"
-            android:textColor="@color/primary_dark"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:gravity="center_horizontal"/>
-
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="124dp"
-            android:layout_gravity="center_horizontal|bottom"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|center_vertical"
             android:weightSum="1"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Author Name"
+                android:id="@+id/authorTextView"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/primary_dark"
+                android:textSize="30dp"
+                android:textStyle="bold|italic"
+                android:textAlignment="center"
+                android:layout_marginLeft="8dp"/>
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView2"
+                android:layout_marginLeft="8dp">
+
+                <TextView
+                    android:layout_width="210dp"
+                    android:layout_height="115dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="  This is where we can pull some information about the author. If we can't do this then oh well. Z------------------  Image would go here. Only if we have time will we implement this feature. I'm still typing just to figure out if the scroll pane works. If it does work it should be working after I write these couple of lines of text to fill it up.   "
+                    android:id="@+id/textViewDetails"
+                    android:textColor="@color/primary_dark"/>
+            </ScrollView>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
             >
 
             <ImageView
-                android:layout_width="104dp"
-                android:layout_height="match_parent"
-                android:id="@+id/imageView2"
-                android:src="@drawable/ic_launcher"/>
-
-            <Space
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.64"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:layout_gravity="left|center_vertical"
+                android:src="@drawable/ic_launcher"
 
-            <TextView
-                android:layout_width="210dp"
-                android:layout_height="115dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="  This is where we can pull some information about the author. If we can't do this then oh well. Z------------------  Image would go here. Only if we have time will we implement this feature.   "
-                android:id="@+id/textView"
-                android:textColor="@color/primary_dark"
-                android:layout_gravity="bottom"/>
-
-        </LinearLayout>
+                />
+        </FrameLayout>
 
     </FrameLayout>
 
@@ -75,7 +88,8 @@
         android:id="@+id/imageViewBooks"
         android:src="@drawable/books"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"/>
 
     <ListView
         android:layout_width="wrap_content"

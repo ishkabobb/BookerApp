@@ -9,5 +9,7 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_searchable">SearchableActivity</string>
     <string name="title_activity_info">InfoActivity</string>
+    <string name="title_activity_book">BookActivity</string>
+    <string name="title_activity_more">moreActivity</string>
 
 </resources>
