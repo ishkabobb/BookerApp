@@ -152,19 +152,17 @@ public class InfoActivity extends Activity {
             }
             new GetAuthorPic().execute(authorpic);
             new GetAuthorInfo().execute(authorpic);
-
-            //updatelist(al);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         return al;
-
     }
 
     public static void setBook(Book b){
         book = b;
     }
+
     public static Book getBook(){
         return book;
     }
@@ -178,10 +176,7 @@ public class InfoActivity extends Activity {
             HttpClient client = new DefaultHttpClient();
             String search = query[0];
             search = search.replaceAll("\\'","");
-            Log.d("***url string", "" + search);
             String request = "https://openlibrary.org/authors/" + search + ".json";
-
-
             HttpGet httpGet = new HttpGet(request);
             try {
                 HttpResponse response = client.execute(httpGet);
@@ -210,23 +205,19 @@ public class InfoActivity extends Activity {
 
         protected void onPostExecute(String info) {
             String authorinfo ="", bio = "No Bio available.", death = "", birth = "";
-
             try {
                 JSONObject jo = new JSONObject(info);
-
                    try {
                         bio = jo.getString("bio");//bio
                         bio = bio.replaceAll("\",", "");
                         } catch (Exception e) {
                     }
-
                     try {
                         death = jo.getString("death_date");
                         death = death.replaceAll("\",", "");
                     } catch (Exception e) {
                         Log.d("***APPANAME:", "Failed to get death");
                     }
-
                     try {
                         birth = jo.getString("birth_date");
                         birth = birth.replaceAll("\",", "");
@@ -234,18 +225,14 @@ public class InfoActivity extends Activity {
                         Log.d("***APPANAME:", "Failed to get birthday");
                     }
                 }catch (Exception e){}
-
                 authorinfo = bio;
                 if (authorinfo.startsWith("{")){
                     authorinfo = authorinfo.substring(30, bio.length());
                 }
-
                 authorinfo = authorinfo.replaceAll("(\\\\r\\\\n\\\\r\\\\n|\\\\r\\\\n|\\\\r|\\\\n)", " ");
-
                 if (!birth.equals("")){
                     authorinfo = authorinfo + " Born: " + birth;
                 }
-
                 if (!death.equals("")){
                     authorinfo = authorinfo + " Died: " + death;
                 }
@@ -270,28 +257,19 @@ public class InfoActivity extends Activity {
             Bitmap bitmap = null;
             try {
                 String id = query[0];
-                Log.d("***APPANAME:", "Authorpic id:  " + id);
                 URL url = new URL ("http://covers.openlibrary.org/a/olid/" + id + "-M.jpg");
-                Log.d("***APPANAME:", "Authorpic url:  " + url);
                 HttpGet httpRequest = null;
                 httpRequest = new HttpGet((url.toURI()));
                 HttpClient httpclient = new DefaultHttpClient();
-
                 HttpResponse response = (HttpResponse) httpclient.execute(httpRequest);
-
                 HttpEntity entity = response.getEntity();
                 BufferedHttpEntity b_entity = new BufferedHttpEntity(entity);
                 InputStream input = b_entity.getContent();
-
                 bitmap = BitmapFactory.decodeStream(input);
-
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return bitmap;
-
         }
 
         protected void onPostExecute(Bitmap bm) {
@@ -318,12 +296,8 @@ public class InfoActivity extends Activity {
             String search = query[0].replaceAll("\\s+", "%20");
             search = search.replaceAll("'","");
             search = search.replaceAll("`","");
-            Log.d("***url string", "" + search);
-            //search = search.replaceAll("'", "%20"); Doesn't Work
             String request = "http://openlibrary.org/search.json?author=" + search;
             request = request + "&jscmd=data&format=json";
-            Log.d("****APP", "Request ="+request);
-
             HttpGet httpGet = new HttpGet(request);
             try {
                 HttpResponse response = client.execute(httpGet);
@@ -407,8 +381,5 @@ class infoAdapter extends ArrayAdapter<Book> {
         ImageView ivCover = (ImageView) vi.findViewById(R.id.imageViewCover);
         text.setText(b.getTitle());
         return vi;
-
     }
-
-
 }
