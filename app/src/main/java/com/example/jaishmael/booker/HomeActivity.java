@@ -123,7 +123,6 @@ public class HomeActivity extends Activity {
 
     private void initList() {
         ArrayList<String> al = mDBHandler.databaseToString();
-        Log.d("***ALSIZE:", "" + al.size());
         yourAdapter<String> mAdapter = new yourAdapter(this, al);
         lv.setAdapter(mAdapter);
     }

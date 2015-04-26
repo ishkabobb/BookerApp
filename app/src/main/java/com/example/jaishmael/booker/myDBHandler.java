@@ -76,7 +76,7 @@ public class myDBHandler extends SQLiteOpenHelper {
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<String> al = new ArrayList<String>();
-        String query = "SELECT * FROM " + TABLE_AUTHORS + " WHERE 1;";
+        String query = "SELECT * FROM " + TABLE_AUTHORS + " WHERE 1 ORDER BY " + COLUMN_AUTHORNAME + " ASC;";
 
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();

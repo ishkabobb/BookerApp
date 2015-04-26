@@ -126,7 +126,7 @@ public class InfoActivity extends Activity {
                 }catch (Exception e){}
 
                 try{
-                    cover = jarr.getJSONArray("edition_key").getString(0);
+                    cover = jarr.getString("cover_edition_key");
                     cover = cover.replaceAll("\",", "");
                 }catch (Exception e){ Log.d("***APPANAME:", "Failed to get Cover for " + booktitle);}
 
@@ -248,6 +248,11 @@ public class InfoActivity extends Activity {
                 }catch (Exception e){}
 
                 authorinfo = bio;
+                if (authorinfo.startsWith("{")){
+                    authorinfo = authorinfo.substring(30, bio.length());
+                }
+
+                authorinfo = authorinfo.replaceAll("(\\\\r\\\\n\\\\r\\\\n|\\\\r\\\\n|\\\\r|\\\\n)", " ");
 
                 if (!birth.equals("")){
                     authorinfo = authorinfo + " Born: " + birth;

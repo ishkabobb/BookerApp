@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,7 +105,8 @@ public class BookActivity extends Activity {
         descTextView = (TextView) findViewById(R.id.descTextView);
         Object tag2 = tags.get(0);
         String tag2Name = tag2.toString();
-        String desc = tag2Name;
+        String desc = "Tags: ";
+        desc += tag2Name;
         for (int i = 0; i < tags.size(); i++){
             Object tag = tags.get(i);
             String tagName = tag.toString();
@@ -112,6 +114,10 @@ public class BookActivity extends Activity {
         }
         desc += ".";
         descTextView.setText(desc);
+        try {
+            new GetCoverPic().execute(coverid);
+        }
+        catch (Exception e){}
 
         amazon = (Button) findViewById(R.id.amazonButton);
         amazon.setOnClickListener(new View.OnClickListener() {
@@ -137,15 +143,15 @@ public class BookActivity extends Activity {
 
     private class GetCoverPic extends AsyncTask<String, Void, Bitmap> {
         private Exception e;
-        ImageView img = (ImageView)findViewById(R.id.imageViewBook);
+        ImageView img = (ImageView)findViewById(R.id.imageViewCover);
 
         protected Bitmap doInBackground(String... query) {
             Bitmap bitmap = null;
             try {
                 String id = query[0];
-                //Log.d("***APPANAME:", "Authorpic id:  " + id);
+                Log.d("***APPANAME:", "Bookpic id:  " + id);
                 URL url = new URL ("http://covers.openlibrary.org/b/olid/" + id + "-M.jpg");
-                //Log.d("***APPANAME:", "Authorpic url:  " + url);
+                Log.d("***APPANAME:", "Bookpic url:  " + url);
                 HttpGet httpRequest = null;
                 httpRequest = new HttpGet((url.toURI()));
                 HttpClient httpclient = new DefaultHttpClient();
